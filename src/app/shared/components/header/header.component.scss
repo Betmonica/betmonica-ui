@@ -1,0 +1,48 @@
+@import "src/mixins";
+
+.header {
+  &-wrapper {
+    @include wrapper;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+
+    &__logo {
+      cursor: pointer;
+
+      &-img {
+        width: 183px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+.profile {
+  &-content {
+    &__balance {
+    }
+
+    &__name {
+    }
+
+    &__authorization {
+    }
+  }
+}
+
+.authorization {
+  &-content {
+    &__buttons {
+      display: flex;
+      gap: 10px;
+    }
+  }
+}
+
+.buttons {
+}

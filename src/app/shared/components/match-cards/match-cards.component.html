@@ -1,0 +1,7 @@
+<div class='cards'>
+  <div class='cards-content'>
+    <div *ngIf='matches.length > 0' class='cards-content__list'>
+      <app-match-card *ngFor='let match of matches' [matchData]='match'></app-match-card>
+    </div>
+  </div>
+</div>

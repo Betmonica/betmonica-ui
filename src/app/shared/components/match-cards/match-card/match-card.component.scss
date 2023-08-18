@@ -1,0 +1,78 @@
+.card {
+  background-color: var(--match-bg);
+  border-radius: 10px;
+
+  &-content {
+    display: flex;
+    gap: 40px;
+    padding: 10px 20px 20px;
+
+    &__team {
+    }
+
+    &__live {
+    }
+  }
+}
+
+.team {
+  &-content {
+    max-width: 65px;
+    text-align: center;
+
+    &__logo {
+      position: relative;
+
+      &-img {
+        width: 65px;
+        height: 100px;
+        object-fit: contain;
+      }
+    }
+
+    &__name {
+      &-text {
+        font-size: 1.6rem;
+        color: var(--card-team-color);
+      }
+    }
+  }
+}
+
+.live {
+  &-content {
+    padding-top: 25px;
+
+    &__label {
+      background-color: var(--live-label-bg);
+      border-radius: 10px;
+
+      &-text {
+        color: var(--live-label-color);
+        font-size: 1.6rem;
+        padding: 3px 11px;
+      }
+    }
+  }
+}
+
+.label {
+  position: absolute;
+  top: 10px;
+  background-color: var(--odd-label-bg);
+  border-radius: 2px;
+
+  &.right {
+    left: -10px;
+  }
+
+  &.left {
+    right: -10px;
+  }
+
+  &-text {
+    font-size: 1.4rem;
+    color: var(--odd-label-color);
+    padding: 2px;
+  }
+}

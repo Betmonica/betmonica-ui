@@ -1,0 +1,9 @@
+<button
+  [ngClass]='["button-" + buttonData.type]'
+  [ngStyle]='{ "border-radius": buttonData.borderRadius + "px" }'
+  class='button'
+>
+  <span [ngClass]='["button-text__" + buttonData.size]' class='button-text'>
+    <ng-content></ng-content>
+  </span>
+</button>

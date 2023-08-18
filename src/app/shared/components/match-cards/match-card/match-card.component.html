@@ -1,0 +1,39 @@
+<div class='card'>
+  <div class='card-content'>
+    <div class='card-content__team team'>
+      <div class='team-content'>
+        <div class='team-content__logo'>
+          <img [src]='matchData.homeTeam.imageUrl' alt='team' class='team-content__logo-img'>
+          <div class='label left'>
+            <span class='label-text'>x{{matchData.homeTeam.odd || ''}}</span>
+          </div>
+        </div>
+        <div class='team-content__name'>
+          <span class='team-content__name-text'>{{matchData.homeTeam.name}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='card-content__live live'>
+      <div class='live-content'>
+        <div class='live-content__label'>
+          <span class='live-content__label-text'>LIVE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='card-content__team team'>
+      <div class='team-content'>
+        <div class='team-content__logo'>
+          <img [src]='matchData.awayTeam.imageUrl' alt='team' class='team-content__logo-img'>
+          <div class='label right'>
+            <span class='label-text'>x{{matchData.awayTeam.odd || ''}}</span>
+          </div>
+        </div>
+        <div class='team-content__name'>
+          <span class='team-content__name-text'>{{matchData.awayTeam.name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Russo+One&display=swap');
+@import "node_modules/ngx-smart-modal/styles/ngx-smart-modal";
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg: #222222;
+  --odd-label-bg: #799A3F;
+  --match-bg: #161616;
+  --live-label-bg: #231818;
+
+  --light-green-btn: #799A3F;
+  --light-green-btn-hvr: #597230;
+
+  --card-team-color: #A3AAB2;
+  --live-label-color: #E9493E;
+  --odd-label-color: #1A3C00;
+  --white-text-color: #FFFFFF;
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  background-color: var(--main-bg);
+}
+

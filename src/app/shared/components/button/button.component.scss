@@ -1,0 +1,33 @@
+.button {
+  display: inline-block;
+  background: transparent;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+
+  &-text {
+    display: inline-block;
+
+    &__small {
+      padding: 8px 15px;
+    }
+
+    &__medium {
+      padding: 12px 20px;
+    }
+
+    &__large {
+      padding: 16px 25px;
+    }
+  }
+
+  &-green {
+    color: var(--white-text-color);
+    background-color: var(--light-green-btn);
+    transition: all 0.25s ease;
+
+    &:hover {
+      background-color: var(--light-green-btn-hvr);
+    }
+  }
+}

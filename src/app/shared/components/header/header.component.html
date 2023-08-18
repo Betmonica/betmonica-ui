@@ -1,0 +1,33 @@
+<header class='header'>
+  <div class='header-wrapper'>
+    <div class='header-content'>
+      <span [routerLink]='""' class='header-content__logo'>
+        <img [src]='"../assets/images/logo.svg"' alt='' class='header-content__logo-img'>
+      </span>
+      <div *ngIf='user?._id; else elseBlock' class='header-content__profile profile'>
+        <div class='profile-content'>
+          <span class='profile-content__balance'>
+            {{user?.balance}}
+          </span>
+          <span class='profile-content__name'>
+            {{user?.email}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<ng-template #elseBlock>
+  <div class='header-content__authorization authorization'>
+    <div class='authorization-content'>
+      <ul class='authorization-content__buttons buttons'>
+        <app-button (click)='openRegistrationModal()' [buttonData]='authorizationButtonsData'>Registration</app-button>
+        <app-button (click)='openLoginModal()' [buttonData]='authorizationButtonsData'>Login</app-button>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<app-login-modal></app-login-modal>
+<app-registration-modal></app-registration-modal>
