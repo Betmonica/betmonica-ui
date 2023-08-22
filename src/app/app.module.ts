@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { ToastrModule } from 'ngx-toastr';
 
 /** STATES **/
 import { UserState } from './store/states/user.state';
@@ -32,7 +35,15 @@ import { environment } from '../environments/environment';
       developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
+    ToastrModule.forRoot({
+      titleClass: 'toastr-title',
+      messageClass: 'toastr-message',
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    }),
+    BrowserAnimationsModule,
+    DragScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

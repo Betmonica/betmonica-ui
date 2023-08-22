@@ -1,1 +1,16 @@
-<p>match-rows works!</p>
+<div class='matches'>
+  <div class='matches-content'>
+    <ng-container *ngIf='_matches.length > 0'>
+      <div *ngFor='let matchBlock of _matches' class='matches-content__block'>
+        <div class='matches-content__block-date date'>
+          <div class='date-content'>
+            <span class='date-content__text'>{{matchBlock.date | date:'dd.MM'}}</span>
+          </div>
+        </div>
+        <div class='matches-content__block-list'>
+          <app-match-row *ngFor='let match of matchBlock.matches' [match]='match'></app-match-row>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

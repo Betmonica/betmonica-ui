@@ -1,0 +1,36 @@
+.matches {
+  &-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+
+    &__block {
+      &-date {
+      }
+
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  }
+}
+
+.date {
+  padding-bottom: 15px;
+  text-align: center;
+
+  &-content {
+    display: inline-block;
+    background-color: var(--light-green-btn);
+    border-radius: 10px;
+
+    &__text {
+      display: inline-block;
+      font-size: 1.6rem;
+      color: var(--white-text-color);
+      padding: 5px 20px;
+    }
+  }
+}

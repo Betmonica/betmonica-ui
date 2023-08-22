@@ -1,0 +1,7 @@
+@import "src/mixins";
+
+.modal {
+  &-content {
+    @include authorization-modal;
+  }
+}

@@ -1,3 +1,33 @@
 <ngx-smart-modal #loginModal identifier='loginModal'>
-  asd
+  <div class='modal'>
+    <div class='modal-content'>
+      <div class='modal-content__title'>
+        <h2 class='modal-content__title-text'>Login</h2>
+      </div>
+      <form (ngSubmit)='login()' [formGroup]='loginForm' class='modal-content__form form'>
+        <div class='form-content'>
+          <label class='form-content__label'>
+            <span class='form-content__label-text'>Email</span>
+            <input
+              class='form-content__label-input'
+              formControlName='email'
+              placeholder='Enter email'
+              type='text'
+            />
+          </label>
+          <label class='form-content__label'>
+            <span class='form-content__label-text'>Password</span>
+            <input
+              class='form-content__label-input'
+              formControlName='password'
+              placeholder='Enter password'
+              type='password'
+            />
+          </label>
+          <app-button [buttonData]='loginButtonData'>Sign in</app-button>
+        </div>
+      </form>
+      <span (click)='changeAuthorizationWay()' class='modal-content__change'>Don't have an account yet?</span>
+    </div>
+  </div>
 </ngx-smart-modal>

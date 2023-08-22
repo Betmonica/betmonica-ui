@@ -1,7 +1,13 @@
 <div class='cards'>
   <div class='cards-content'>
-    <div *ngIf='matches.length > 0' class='cards-content__list'>
+    <drag-scroll
+      *ngIf='matches.length > 0'
+      [drag-scroll-y-disabled]='true'
+      [scrollbar-hidden]='true'
+      class='match-drag-scroll'
+      style='width: 100%;'
+    >
       <app-match-card *ngFor='let match of matches' [matchData]='match'></app-match-card>
-    </div>
+    </drag-scroll>
   </div>
 </div>

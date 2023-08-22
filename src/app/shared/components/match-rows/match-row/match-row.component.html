@@ -1,1 +1,36 @@
-<p>match-row works!</p>
+<div class='match'>
+  <div class='match-content'>
+    <div class='match-content__team team'>
+      <div class='team-content left'>
+        <app-button [buttonData]='betButtonData'>Bet</app-button>
+        <div *ngIf='match.homeTeam.odd; else emptyOdd' class='team-content__odd'>
+          <span class='team-content__odd-text'>x{{match.homeTeam.odd}}</span>
+        </div>
+        <span class='team-content__name'>{{match.homeTeam.name}}</span>
+        <img [src]='match.homeTeam.imageUrl' alt='team' class='team-content__image' />
+      </div>
+    </div>
+    <div class='match-content__info info'>
+      <div class='info-content'>
+        <div class='info-content__time'>
+          <span class='info-content__time-text'>{{match.startDate | date:'HH:mm'}}</span>
+        </div>
+        <span class='info-content__vs'>VS</span>
+      </div>
+    </div>
+    <div class='match-content__team team'>
+      <div class='team-content right'>
+        <img [src]='match.awayTeam.imageUrl' alt='team' class='team-content__image' />
+        <span class='team-content__name'>{{match.awayTeam.name}}</span>
+        <div *ngIf='match.awayTeam.odd; else emptyOdd' class='team-content__odd'>
+          <span class='team-content__odd-text'>x{{match.awayTeam.odd}}</span>
+        </div>
+        <app-button [buttonData]='betButtonData'>Bet</app-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyOdd>
+  <div class='team-content__empty-odd'></div>
+</ng-template>

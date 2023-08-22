@@ -1,9 +1,9 @@
 <button
-  [ngClass]='["button-" + buttonData.type]'
+  [ngClass]='[ "button-" + buttonData.type, "button__" + buttonData.size ]'
   [ngStyle]='{ "border-radius": buttonData.borderRadius + "px" }'
   class='button'
 >
-  <span [ngClass]='["button-text__" + buttonData.size]' class='button-text'>
+  <span class='button-text'>
     <ng-content></ng-content>
   </span>
 </button>

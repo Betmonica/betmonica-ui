@@ -5,22 +5,25 @@
   border: 0;
   cursor: pointer;
 
-  &-text {
-    display: inline-block;
-
-    &__small {
-      padding: 8px 15px;
-    }
-
-    &__medium {
-      padding: 12px 20px;
-    }
-
-    &__large {
-      padding: 16px 25px;
-    }
+  /** SIZES **/
+  &__small {
+    padding: 8px 15px;
   }
 
+  &__medium {
+    padding: 12px 20px;
+  }
+
+  &__large {
+    padding: 16px 25px;
+  }
+
+  &__wide {
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  /** TYPES **/
   &-green {
     color: var(--white-text-color);
     background-color: var(--light-green-btn);

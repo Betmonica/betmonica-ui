@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 /** PAGES **/
@@ -17,6 +17,8 @@ import { ButtonComponent } from './components/button/button.component';
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { RegistrationModalComponent } from './modals/registration-modal/registration-modal.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -34,8 +36,11 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
   imports: [
     CommonModule,
     RouterLink,
-    NgxSmartModalModule.forRoot()
+    NgxSmartModalModule.forRoot(),
+    DragScrollModule,
+    ReactiveFormsModule
   ],
+  providers: [DatePipe],
   exports: [
     HeaderComponent
   ]

@@ -3,3 +3,59 @@
   margin: 0 auto;
   padding: 0 20px;
 }
+
+@mixin label-field {
+  display: block;
+  padding-bottom: 10px;
+
+  &-text {
+    display: block;
+    font-size: 1.4rem;
+    line-height: 1.15em;
+    color: var(--white-text-color);
+  }
+
+  &-input {
+    background-image: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+
+    width: 100%;
+    padding: 10px;
+    color: var(--white-text-color);
+    border: 1px solid var(--input-border-color);
+    background-color: var(--input-bg);
+    border-radius: 5px;
+  }
+}
+
+@mixin authorization-modal {
+  &__title {
+    text-align: center;
+
+    &-text {
+      font-size: 1.8rem;
+      color: var(--white-text-color);
+    }
+  }
+
+  &__change {
+    display: inline-block;
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--white-text-color);
+    cursor: pointer;
+    padding-top: 10px;
+    width: 100%;
+  }
+
+  .form {
+    &-content {
+      &__label {
+        @include label-field;
+      }
+    }
+  }
+}

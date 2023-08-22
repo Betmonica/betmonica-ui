@@ -1,63 +1,69 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { HeadersService } from './headers.service';
 import { EnvironmentService } from './environment.service';
-import { AuthorizationResponse, BalanceResponse, Response, TokenResponse } from '../interfaces';
+import { AuthorizationResponse, BalanceResponse, Response, TokenData, UserDataResponse } from '../interfaces';
 import { ResetUserData, SetBalance, SetUserData } from '../../store/actions/user.actions';
+import { AdditionalService } from './additional.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(
     private http: HttpClient,
     private environmentService: EnvironmentService,
     private store: Store,
-    private headersService: HeadersService
+    private headersService: HeadersService,
+    private additionalService: AdditionalService
   ) {
-  }
-
-  public login(email: string, password: string) {
-    this.loginRequest(email, password).subscribe({
-      next: (response: Response<AuthorizationResponse>) => {
-        if (response.success) {
-          this.headersService.accessToken = response.data.accessToken;
-          this.store.dispatch(new SetUserData(response.data.user));
-        }
+    this.getUserData().subscribe({
+      next: (response: Response<UserDataResponse>) => {
+        this.store.dispatch(new SetUserData(response.data.user));
       }
     });
+    this.startAutoRefreshAccessToken();
+  }
+
+  public login(email: string, password: string): Observable<Response<AuthorizationResponse>> {
+    return this.loginRequest(email, password).pipe(
+      map((response: Response<AuthorizationResponse>) => {
+        this.headersService.tokenData = response.data.tokenData;
+        this.store.dispatch(new SetUserData(response.data.user));
+
+        return response;
+      })
+    );
   }
 
   public registration(email: string, password: string) {
-    this.registrationRequest(email, password).subscribe({
-      next: (response: Response<AuthorizationResponse>) => {
-        if (response.success) {
-          this.headersService.accessToken = response.data.accessToken;
-          this.store.dispatch(new SetUserData(response.data.user));
-        }
-      }
-    });
+    return this.registrationRequest(email, password).pipe(
+      map((response: Response<AuthorizationResponse>) => {
+        this.headersService.tokenData = response.data.tokenData;
+        this.store.dispatch(new SetUserData(response.data.user));
+
+        return response;
+      })
+    );
   }
 
   public logout() {
     this.logoutRequest().subscribe({
-      next: (response: Response<{}>) => {
-        if (response.success) {
-          this.store.dispatch(new ResetUserData());
-        }
+      next: () => {
+        this.store.dispatch(new ResetUserData());
       }
     });
   }
 
   public refreshAccessToken() {
     this.refreshAccessTokenRequest().subscribe({
-      next: (response: Response<TokenResponse>) => {
-        if (response.success) {
-          this.headersService.accessToken = response.data.accessToken;
-        }
+      next: (response: Response<TokenData>) => {
+        this.headersService.tokenData = response.data;
+      },
+      error: () => {
+        this.headersService.tokenData = {} as TokenData;
       }
     });
   }
@@ -65,10 +71,30 @@ export class UserService {
   public refreshBalance() {
     this.refreshBalanceRequest().subscribe({
       next: (response: Response<BalanceResponse>) => {
-        if (response.success) {
-          this.store.dispatch(new SetBalance(response.data.balance));
-        }
+        this.store.dispatch(new SetBalance(response.data.balance));
       }
+    });
+  }
+
+  private startAutoRefreshAccessToken() {
+    if (
+      this.headersService.tokenData?.accessToken == null || this.headersService.tokenData?.expiredIn == null
+    ) {
+      return;
+    }
+
+    const convertedExpiredIn: number = new Date(0).setUTCSeconds(this.headersService.tokenData.expiredIn);
+    this.additionalService.callCodeAt(convertedExpiredIn).subscribe({
+      next: () => {
+        this.refreshAccessToken();
+        this.startAutoRefreshAccessToken();
+      }
+    });
+  }
+
+  private getUserData(): Observable<Response<UserDataResponse>> {
+    return this.http.get<Response<UserDataResponse>>(`${this.environmentService.environment.apiUrl}/user/user-data`, {
+      headers: this.headersService.userHeader()
     });
   }
 
@@ -77,20 +103,18 @@ export class UserService {
   }
 
   private logoutRequest() {
-    return this.http.delete<Response<{}>>(`${this.environmentService.environment.apiUrl}/user/logout`, {
-      headers: this.headersService.userHeader()
-    });
+    return this.http.delete<Response<{}>>(`${this.environmentService.environment.apiUrl}/user/logout`);
   }
 
-  private refreshAccessTokenRequest(): Observable<Response<TokenResponse>> {
-    return this.http.get<Response<TokenResponse>>(`${this.environmentService.environment.apiUrl}/user/refresh-token`);
+  private refreshAccessTokenRequest(): Observable<Response<TokenData>> {
+    return this.http.get<Response<TokenData>>(`${this.environmentService.environment.apiUrl}/user/refresh-token`, { withCredentials: true });
   }
 
   private loginRequest(email: string, password: string): Observable<Response<AuthorizationResponse>> {
     return this.http.post<Response<AuthorizationResponse>>(`${this.environmentService.environment.apiUrl}/user/login`, {
       email,
       password
-    });
+    }, { withCredentials: true });
   }
 
   private registrationRequest(email: string, password: string): Observable<Response<AuthorizationResponse>> {

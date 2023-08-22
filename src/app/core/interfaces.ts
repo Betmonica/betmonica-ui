@@ -22,11 +22,17 @@ export interface IAction<T> {
   payload: T;
 }
 
-export interface TokenResponse {
-  accessToken: string;
+export interface UserDataResponse {
+  user: UserData;
 }
 
-export interface AuthorizationResponse extends TokenResponse {
+export interface TokenData {
+  accessToken: string;
+  expiredIn: number;
+}
+
+export interface AuthorizationResponse {
+  tokenData: TokenData,
   user: UserData;
 }
 
@@ -42,7 +48,7 @@ export interface ButtonData {
 
 export interface MatchData {
   id: string;
-  startDate: string;
+  startDate: Date;
   slug: string;
   isLive: boolean;
   countMaps: number;

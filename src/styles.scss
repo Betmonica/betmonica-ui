@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Russo+One&display=swap');
 @import "node_modules/ngx-smart-modal/styles/ngx-smart-modal";
+@import 'ngx-toastr/toastr';
 
 *, *::before, *::after {
   margin: 0;
@@ -12,10 +13,15 @@
   --odd-label-bg: #799A3F;
   --match-bg: #161616;
   --live-label-bg: #231818;
+  --modal-bg: #282828;
+  --input-bg: #4B4B4B;
 
   --light-green-btn: #799A3F;
   --light-green-btn-hvr: #597230;
 
+  --input-border-color: #000000;
+  --close-modal-color: #FFFFFF;
+  --match-time-color: #A1A1A1;
   --card-team-color: #A3AAB2;
   --live-label-color: #E9493E;
   --odd-label-color: #1A3C00;
@@ -27,5 +33,62 @@ html, body {
   font-size: 10px;
   font-weight: 400;
   background-color: var(--main-bg);
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+}
+
+/*Change text in autofill textbox */
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--white-text-color) !important;
+}
+
+/** MODAL **/
+.nsm-content {
+  background-color: var(--modal-bg);
+  border-radius: 10px;
+}
+
+.nsm-dialog {
+  max-width: 465px;
+
+  &-btn-close {
+    color: var(--close-modal-color);
+  }
+}
+
+/** TOASTR **/
+.toastr {
+  &-title {
+    font-size: 1.8rem;
+  }
+
+  &-message {
+    font-size: 1.6rem;
+  }
+}
+
+/** DRAG-SCROLL **/
+drag-scroll {
+  cursor: grab !important;
+  pointer-events: auto !important;
+
+  &:active {
+    cursor: grabbing !important;
+  }
+
+  &.match-drag-scroll {
+    display: flex !important;
+
+    & .drag-scroll-content {
+      display: flex !important;
+      gap: 20px !important;
+    }
+  }
 }
 

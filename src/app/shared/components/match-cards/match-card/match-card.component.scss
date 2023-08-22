@@ -1,9 +1,14 @@
 .card {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background-color: var(--match-bg);
   border-radius: 10px;
 
   &-content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 65px 50px 65px;
     gap: 40px;
     padding: 10px 20px 20px;
 
@@ -71,6 +76,7 @@
   }
 
   &-text {
+    display: inline-block;
     font-size: 1.4rem;
     color: var(--odd-label-color);
     padding: 2px;

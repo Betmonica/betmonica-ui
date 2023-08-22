@@ -1,3 +1,35 @@
 <ngx-smart-modal #registrationModal identifier='registrationModal'>
-  asdasdadsasdasd
+  <div class='modal'>
+    <div class='modal-content'>
+      <div class='modal-content__title'>
+        <h2 class='modal-content__title-text'>Registration</h2>
+      </div>
+      <form (ngSubmit)='registration()' [formGroup]='registrationForm' class='modal-content__form form'>
+        <div class='form-content'>
+          <label class='form-content__label'>
+            <span class='form-content__label-text'>Email</span>
+            <input
+              class='form-content__label-input'
+              formControlName='email'
+              placeholder='Enter email'
+              type='text'
+            />
+          </label>
+          <label class='form-content__label'>
+            <span class='form-content__label-text'>Password</span>
+            <input
+              class='form-content__label-input'
+              formControlName='password'
+              placeholder='Enter password'
+              type='password'
+            />
+          </label>
+          <app-button [buttonData]='registrationButtonData'>Sign Up</app-button>
+        </div>
+      </form>
+      <span (click)='changeAuthorizationWay()' class='modal-content__change'>Already have an account?</span>
+    </div>
+  </div>
 </ngx-smart-modal>
+
+<app-login-modal></app-login-modal>
