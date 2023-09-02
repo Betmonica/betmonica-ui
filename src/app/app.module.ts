@@ -11,6 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 /** STATES **/
 import { UserState } from './store/states/user.state';
 import { MatchesState } from './store/states/matches.state';
+import { BetsState } from './store/states/bets.state';
 
 /** COMPONENTS **/
 import { AppComponent } from './app.component';
@@ -23,30 +24,27 @@ import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    SharedModule,
-    NgxsModule.forRoot([UserState, MatchesState], {
-      developmentMode: !environment.production
-    }),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxSmartModalModule.forRoot(),
-    ToastrModule.forRoot({
-      titleClass: 'toastr-title',
-      messageClass: 'toastr-message',
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true
-    }),
-    BrowserAnimationsModule,
-    DragScrollModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		HttpClientModule,
+		SharedModule,
+		NgxsModule.forRoot([UserState, MatchesState, BetsState], {
+			developmentMode: !environment.production
+		}),
+		NgxsReduxDevtoolsPluginModule.forRoot(),
+		NgxSmartModalModule.forRoot(),
+		ToastrModule.forRoot({
+			titleClass: 'toastr-title',
+			messageClass: 'toastr-message',
+			positionClass: 'toast-bottom-right',
+			preventDuplicates: true
+		}),
+		BrowserAnimationsModule,
+		DragScrollModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

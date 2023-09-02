@@ -1,5 +1,6 @@
 <button
-  [ngClass]='[ "button-" + buttonData.type, "button__" + buttonData.size ]'
+  [attr.aria-disabled]='disabled'
+  [ngClass]='[ "button-" + buttonData.type, "button__" + buttonData.size, disabled ? "disabled" : "" ]'
   [ngStyle]='{ "border-radius": buttonData.borderRadius + "px" }'
   class='button'
 >

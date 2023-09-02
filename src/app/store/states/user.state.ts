@@ -1,32 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
-import { ResetUserData, SetUserData, SetBalance } from '../actions/user.actions';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import {
+	ResetUserData,
+	SetUserData,
+	SetBalance
+} from '../actions/user.actions';
 import { IAction, UserData } from '../../core/interfaces';
 
 @State<UserData>({
-  name: 'user',
-  defaults: {} as UserData
+	name: 'user',
+	defaults: {} as UserData
 })
 @Injectable()
 export class UserState {
-  @Action(SetUserData)
-  private setUserData(ctx: StateContext<UserData>, action: IAction<UserData>): UserData {
-    return ctx.setState(action.payload);
-  }
+	@Selector()
+	static balance(state: UserData): number {
+		return state.balance || 0;
+	}
 
-  @Action(ResetUserData)
-  private resetUserData(ctx: StateContext<UserData>) {
-    return ctx.setState({} as UserData);
-  }
+	@Action(SetUserData)
+	private setUserData(
+		ctx: StateContext<UserData>,
+		action: IAction<UserData>
+	): UserData {
+		return ctx.setState(action.payload);
+	}
 
-  @Action(SetBalance)
-  private setBalance(ctx: StateContext<UserData>, action: IAction<number>): UserData {
-    const state = ctx.getState();
-    const balance = action.payload;
+	@Action(ResetUserData)
+	private resetUserData(ctx: StateContext<UserData>): UserData {
+		return ctx.setState({} as UserData);
+	}
 
-    return ctx.setState({
-      ...state,
-      balance
-    });
-  }
+	@Action(SetBalance)
+	private setBalance(
+		ctx: StateContext<UserData>,
+		action: IAction<number>
+	): UserData {
+		const state: UserData = ctx.getState();
+		const balance: number = action.payload;
+
+		return ctx.setState({
+			...state,
+			balance
+		});
+	}
 }

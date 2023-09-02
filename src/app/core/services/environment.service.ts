@@ -3,8 +3,8 @@ import { Environment } from '../interfaces';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class EnvironmentService {
-  public environment: Environment = environment;
+	public environment: Environment = environment;
 }

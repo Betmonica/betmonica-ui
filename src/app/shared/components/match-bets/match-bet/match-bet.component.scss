@@ -1,0 +1,143 @@
+.left {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+.right {
+}
+
+.match {
+	border-radius: 5px;
+	background: var(--match-bg);
+
+	&-wrapper {
+		padding: 10px 25px;
+	}
+
+	&-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&__teams {
+		}
+
+		&__bet {
+		}
+
+		&__info {
+		}
+	}
+}
+
+.teams {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+
+	&-item {
+	}
+}
+
+.team {
+	&-content {
+		&__image {
+			width: 50px;
+			height: 50px;
+			object-fit: contain;
+		}
+	}
+}
+
+.vs {
+	color: var(--white-text-color);
+	font-family: 'Russo One', sans-serif;
+	font-size: 2rem;
+}
+
+.bet {
+	&-content {
+		&__text {
+			color: var(--white-text-color);
+			font-size: 1.6rem;
+		}
+	}
+}
+
+.info {
+	&-content {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		&__bet {
+			display: grid;
+			grid-template-columns: auto auto;
+			grid-template-areas:
+				'amount odd'
+				'result result';
+			column-gap: 10px;
+
+			.amount {
+				grid-area: amount;
+			}
+
+			.odd {
+				grid-area: odd;
+			}
+
+			.result {
+				text-align: center;
+				grid-area: result;
+				margin-top: 10px;
+			}
+
+			.amount,
+			.odd,
+			.result {
+				display: inline-block;
+				font-size: 1.6rem;
+				padding: 5px 10px;
+				border-radius: 5px;
+			}
+
+			&.won {
+				.amount,
+				.odd,
+				.result {
+					color: var(--won-bet-color);
+					background-color: var(--won-bet-bg);
+				}
+			}
+
+			&.lost {
+				.amount,
+				.odd {
+					color: var(--lose-bet-color);
+					background-color: var(--lose-bet-bg);
+				}
+			}
+
+			&.upcoming {
+				.amount,
+				.odd,
+				.result {
+					color: var(--white-text-color);
+					border: 1px solid var(--upcoming-bet-border);
+				}
+			}
+
+			&.cancelled {
+				.amount,
+				.odd {
+					color: var(--cancelled-bet-color);
+					background-color: var(--cancelled-bet-bg);
+				}
+			}
+		}
+
+		&__buttons {
+		}
+	}
+}

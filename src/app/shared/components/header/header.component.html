@@ -4,14 +4,15 @@
       <span [routerLink]='""' class='header-content__logo'>
         <img [src]='"../assets/images/logo.svg"' alt='' class='header-content__logo-img'>
       </span>
-      <div *ngIf='user?._id; else elseBlock' class='header-content__profile profile'>
+      <div *ngIf='user?.id; else elseBlock' class='header-content__profile profile'>
         <div class='profile-content'>
-          <span class='profile-content__balance'>
-            {{user?.balance}}
-          </span>
-          <span class='profile-content__name'>
-            {{user?.email}}
-          </span>
+          <div class='profile-content__balance'>
+            <span class='profile-content__balance-text'>{{user?.balance || 0 | currency:'uah':'₴ ':'.2'}}</span>
+          </div>
+          <div class='profile-content__name' (clickOutside)="closePopover()">
+            <span class='profile-content__name-text' (click)='handlePopover()'>Profile</span>
+            <app-custom-dropdown [(isOpen)]='isProfilePopoverOpen' [list]='profileMenu'></app-custom-dropdown>
+          </div>
         </div>
       </div>
     </div>
@@ -19,11 +20,11 @@
 </header>
 
 <ng-template #elseBlock>
-  <div class='header-content__authorization authorization'>
-    <div class='authorization-content'>
-      <ul class='authorization-content__buttons buttons'>
-        <app-button (click)='openRegistrationModal()' [buttonData]='authorizationButtonsData'>Registration</app-button>
-        <app-button (click)='openLoginModal()' [buttonData]='authorizationButtonsData'>Login</app-button>
+  <div class='header-content__authentication authentication'>
+    <div class='authentication-content'>
+      <ul class='authentication-content__buttons buttons'>
+        <app-button (click)='openRegistrationModal()' [buttonData]='authenticationButtonsData'>Registration</app-button>
+        <app-button (click)='openLoginModal()' [buttonData]='authenticationButtonsData'>Login</app-button>
       </ul>
     </div>
   </div>

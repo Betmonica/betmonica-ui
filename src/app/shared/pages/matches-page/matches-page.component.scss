@@ -1,14 +1,13 @@
-@import "src/mixins";
+@import 'src/mixins';
 
 .matches {
-  &-wrapper {
-    @include wrapper;
-  }
+	&-wrapper {
+		@include wrapper;
+	}
 
-  &-content {
-    &__live {
-    }
-  }
+	&-content {
+		&__live {
+			padding-bottom: 40px;
+		}
+	}
 }
-
-

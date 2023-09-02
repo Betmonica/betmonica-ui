@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
     "@ngxs/store": "^3.8.1",
+    "jwt-decode": "^3.1.2",
     "ngx-drag-scroll": "^16.0.0",
     "ngx-smart-modal": "14.0.0",
     "ngx-toastr": "^17.0.2",

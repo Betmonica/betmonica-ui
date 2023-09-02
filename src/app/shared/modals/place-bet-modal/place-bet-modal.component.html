@@ -1,0 +1,37 @@
+<ngx-smart-modal [dismissable]='false' (onDataAdded)='setModalData($event)' [identifier]='"placeBetModal"' #placeBetModal>
+  <div class='modal'>
+    <div class='modal-content'>
+      <div class='modal-content__form form' [formGroup]='betForm'>
+        <div class='form-content'>
+          <label class='form-content__label' *ngIf='matchData'>
+            <app-bet-tabs
+              formControlName='teamId'
+              [homeTeam]='matchData.match.homeTeam'
+              [awayTeam]='matchData.match.awayTeam'
+            ></app-bet-tabs>
+          </label>
+          <label class='form-content__label'>
+            <span class='form-content__label-text'>Bet Amount</span>
+            <input
+              class='form-content__label-input'
+              formControlName='betAmount'
+              placeholder='Enter bet amount'
+              type='number'
+            />
+            <div class='form-validation' *ngIf='betForm.get("betAmount")?.touched'>
+              <span *ngIf='betForm.get("betAmount")?.errors?.["min"]' class='form-validation-error'>Min bet is {{MIN_BET_AMOUNT}}</span>
+              <span *ngIf='betForm.get("betAmount")?.errors?.["max"]' class='form-validation-error'>Max bet is {{userBalance | number:'.2'}}</span>
+              <span *ngIf='betForm.get("betAmount")?.errors?.["required"]' class='form-validation-error'>This field is required</span>
+            </div>
+          </label>
+          <app-button
+            [disabled]='betForm.invalid'
+            [attr.aria-disabled]='betForm.invalid'
+            (click)='onSubmit()'
+            [buttonData]='placeBetButtonData'
+          >Place bet</app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>

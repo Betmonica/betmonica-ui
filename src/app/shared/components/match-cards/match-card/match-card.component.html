@@ -3,21 +3,25 @@
     <div class='card-content__team team'>
       <div class='team-content'>
         <div class='team-content__logo'>
-          <img [src]='matchData.homeTeam.imageUrl' alt='team' class='team-content__logo-img'>
-          <div class='label left'>
-            <span class='label-text'>x{{matchData.homeTeam.odd || ''}}</span>
+          <img [src]='match.homeTeam.imageUrl' alt='team' class='team-content__logo-img'>
+          <span class='bet' *ngIf='betData.homeTeamBet > 0'>{{betData.homeTeamBet | currency:'uah':'₴ '}}</span>
+          <div class='label left' *ngIf='match.homeTeam.odd'>
+            <span class='label-text'>x{{match.homeTeam.odd || ''}}</span>
           </div>
         </div>
-        <div class='team-content__name'>
-          <span class='team-content__name-text'>{{matchData.homeTeam.name}}</span>
+        <div class='team-content__info'>
+          <span class='team-content__info-name'>{{match.homeTeam.name}}</span>
         </div>
       </div>
     </div>
 
-    <div class='card-content__live live'>
-      <div class='live-content'>
-        <div class='live-content__label'>
-          <span class='live-content__label-text'>LIVE</span>
+    <div class='card-content__info info'>
+      <div class='info-content'>
+        <div class='info-content__live'>
+          <span class='info-content__live-text'>LIVE</span>
+        </div>
+        <div class='info-content__start'>
+          <span class='info-content__start-text'>{{match.startDate | date:'HH:mm'}}</span>
         </div>
       </div>
     </div>
@@ -25,13 +29,14 @@
     <div class='card-content__team team'>
       <div class='team-content'>
         <div class='team-content__logo'>
-          <img [src]='matchData.awayTeam.imageUrl' alt='team' class='team-content__logo-img'>
-          <div class='label right'>
-            <span class='label-text'>x{{matchData.awayTeam.odd || ''}}</span>
+          <img [src]='match.awayTeam.imageUrl' alt='team' class='team-content__logo-img'>
+          <span class='bet' *ngIf='betData.awayTeamBet > 0'>{{betData.awayTeamBet | currency:'uah':'₴ '}}</span>
+          <div class='label right' *ngIf='match.awayTeam.odd'>
+            <span class='label-text'>x{{match.awayTeam.odd || ''}}</span>
           </div>
         </div>
-        <div class='team-content__name'>
-          <span class='team-content__name-text'>{{matchData.awayTeam.name}}</span>
+        <div class='team-content__info'>
+          <span class='team-content__info-name'>{{match.awayTeam.name}}</span>
         </div>
       </div>
     </div>

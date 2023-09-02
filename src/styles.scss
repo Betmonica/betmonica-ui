@@ -1,38 +1,93 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Russo+One&display=swap');
-@import "node_modules/ngx-smart-modal/styles/ngx-smart-modal";
+@import 'node_modules/ngx-smart-modal/styles/ngx-smart-modal';
 @import 'ngx-toastr/toastr';
 
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 :root {
-  --main-bg: #222222;
-  --odd-label-bg: #799A3F;
-  --match-bg: #161616;
-  --live-label-bg: #231818;
-  --modal-bg: #282828;
-  --input-bg: #4B4B4B;
+	--main-bg: #222222;
+	--odd-label-bg: #799a3f;
+	--match-bg: #161616;
+	--live-label-bg: #231818;
+	--modal-bg: #282828;
+	--input-bg: #4b4b4b;
+	--profile-popover-bg: #799a3f;
+	--profile-popover-item-bg: #56692a;
 
-  --light-green-btn: #799A3F;
-  --light-green-btn-hvr: #597230;
+	--light-green-btn: #799a3f;
+	--light-green-btn-hvr: #597230;
+	--red-btn: #e9493e;
+	--red-btn-hvr: #b93b31;
 
-  --input-border-color: #000000;
-  --close-modal-color: #FFFFFF;
-  --match-time-color: #A1A1A1;
-  --card-team-color: #A3AAB2;
-  --live-label-color: #E9493E;
-  --odd-label-color: #1A3C00;
-  --white-text-color: #FFFFFF;
+	--cancelled-bet-color: #505050;
+	--cancelled-bet-bg: #a1a1a1;
+
+	--won-bet-color: #1a3c00;
+	--won-bet-bg: #799a3f;
+
+	--lose-bet-color: #e9493e;
+	--lose-bet-bg: #231717;
+
+	--active-bet-border: #ffffff;
+	--bet-border: #505050;
+	--upcoming-bet-border: #ffffff;
+
+	--input-border-color: #000000;
+	--close-modal-color: #ffffff;
+	--match-time-color: #a1a1a1;
+	--card-team-color: #a3aab2;
+	--live-label-color: #e9493e;
+	--odd-label-color: #1a3c00;
+	--white-text-color: #ffffff;
+	--form-validator-error-color: #ff4949;
 }
 
-html, body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  background-color: var(--main-bg);
+html,
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 10px;
+	font-weight: 400;
+	background-color: var(--main-bg);
+}
+
+ul {
+	list-style-type: none;
+}
+
+/* DRAG-SCROLL */
+
+app-match-cards {
+	drag-scroll {
+		/* width */
+		::-webkit-scrollbar {
+			width: 5px;
+			height: 5px;
+			cursor: initial !important;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px grey;
+			border-radius: 10px;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background-color: var(--light-green-btn);
+			border-radius: 10px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background-color: var(--light-green-btn-hvr);
+		}
+	}
 }
 
 /* Change the white to any color */
@@ -40,55 +95,54 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+	-webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
 }
 
 /*Change text in autofill textbox */
 input:-webkit-autofill {
-  -webkit-text-fill-color: var(--white-text-color) !important;
+	-webkit-text-fill-color: var(--white-text-color) !important;
 }
 
 /** MODAL **/
 .nsm-content {
-  background-color: var(--modal-bg);
-  border-radius: 10px;
+	background-color: var(--modal-bg);
+	border-radius: 10px;
 }
 
 .nsm-dialog {
-  max-width: 465px;
+	max-width: 465px;
 
-  &-btn-close {
-    color: var(--close-modal-color);
-  }
+	&-btn-close {
+		color: var(--close-modal-color);
+	}
 }
 
 /** TOASTR **/
 .toastr {
-  &-title {
-    font-size: 1.8rem;
-  }
+	&-title {
+		font-size: 1.8rem;
+	}
 
-  &-message {
-    font-size: 1.6rem;
-  }
+	&-message {
+		font-size: 1.6rem;
+	}
 }
 
 /** DRAG-SCROLL **/
 drag-scroll {
-  cursor: grab !important;
-  pointer-events: auto !important;
+	cursor: grab !important;
+	pointer-events: auto !important;
 
-  &:active {
-    cursor: grabbing !important;
-  }
+	&:active {
+		cursor: grabbing !important;
+	}
 
-  &.match-drag-scroll {
-    display: flex !important;
+	&.match-drag-scroll {
+		display: flex !important;
 
-    & .drag-scroll-content {
-      display: flex !important;
-      gap: 20px !important;
-    }
-  }
+		& .drag-scroll-content {
+			display: flex !important;
+			gap: 20px !important;
+		}
+	}
 }
-

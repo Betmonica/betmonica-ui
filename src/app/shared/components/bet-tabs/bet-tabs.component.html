@@ -1,0 +1,24 @@
+<ul class='tabs' *ngIf='homeTeam && awayTeam'>
+  <li class='tabs-item tab' (click)='updateSelectedTeamId(homeTeam.id)'>
+    <div class='tab-content'>
+      <div class='tab-content__logo'>
+        <img [src]='homeTeam.imageUrl' alt='team logo' class='tab-content__logo-image'>
+      </div>
+      <div class='tab-content__odd' *ngIf='homeTeam.odd'>
+        <span class='tab-content__odd-text'>x{{homeTeam.odd}}</span>
+      </div>
+    </div>
+    <div [ngClass]='{"selected": homeTeam.id === selectedTeamId}' class='border-line'></div>
+  </li>
+  <li class='tabs-item tab' (click)='updateSelectedTeamId(awayTeam.id)'>
+    <div class='tab-content'>
+      <div class='tab-content__logo'>
+        <img [src]='awayTeam.imageUrl' alt='team logo' class='tab-content__logo-image'>
+      </div>
+      <div class='tab-content__odd' *ngIf='awayTeam.odd'>
+        <span class='tab-content__odd-text'>x{{awayTeam.odd}}</span>
+      </div>
+    </div>
+    <div [ngClass]='{"selected": awayTeam.id === selectedTeamId}' class='border-line'></div>
+  </li>
+</ul>

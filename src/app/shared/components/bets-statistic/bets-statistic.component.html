@@ -1,0 +1,40 @@
+<div class='statistic'>
+  <div class='statistic-content'>
+    <div class='statistic-content__columns'>
+      <div class='statistic-content__columns-column column'>
+        <div class='column-content'>
+          <div class='column-content__labels'>
+            <div class='column-content__labels-label labels-label green'>
+              <span class='labels-label-text'>{{statistic.won}} won</span>
+            </div>
+            <div class='column-content__labels-label labels-label green'>
+              <span class='labels-label-text'>Max won: {{statistic.maxWon | currency:'uah':'₴ ':'.0'}}</span>
+            </div>
+            <div class='column-content__labels-label labels-label green'>
+              <span class='labels-label-text'>Total won: {{statistic.totalWon | currency:'uah':'₴ ':'.0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='statistic-content__columns-column column'>
+        <div class='column-content'>
+          <div class='column-content__labels'>
+            <div class='column-content__labels-label labels-label red'>
+              <span class='labels-label-text'>{{statistic.lost}} lost</span>
+            </div>
+            <div class='column-content__labels-label labels-label red'>
+              <span class='labels-label-text'>Max lost: {{statistic.maxLost | currency:'uah':'₴ ':'.0'}}</span>
+            </div>
+            <div class='column-content__labels-label labels-label red'>
+              <span class='labels-label-text'>Total lost: {{statistic.totalLost | currency:'uah':'₴ ':'.0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='statistic-content__profit'>
+      <span class='statistic-content__profit-text'>Profit: {{statistic.profit | currency:'uah':' ₴ ':'.2'}}</span>
+    </div>
+  </div>
+</div>

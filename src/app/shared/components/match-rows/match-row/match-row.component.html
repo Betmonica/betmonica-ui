@@ -2,9 +2,12 @@
   <div class='match-content'>
     <div class='match-content__team team'>
       <div class='team-content left'>
-        <app-button [buttonData]='betButtonData'>Bet</app-button>
+        <app-button (click)='openPlaceBetModal(match.homeTeam.id)' [buttonData]='betButtonData'>Bet</app-button>
         <div *ngIf='match.homeTeam.odd; else emptyOdd' class='team-content__odd'>
-          <span class='team-content__odd-text'>x{{match.homeTeam.odd}}</span>
+          <span class='team-content__bet-amount' *ngIf='betData.homeTeamBet > 0'>
+            {{betData.homeTeamBet | currency:'uah':'₴ ':'.2'}}
+          </span>
+          <span class='team-content__bet-odd'>x{{match.homeTeam.odd}}</span>
         </div>
         <span class='team-content__name'>{{match.homeTeam.name}}</span>
         <img [src]='match.homeTeam.imageUrl' alt='team' class='team-content__image' />
@@ -22,10 +25,13 @@
       <div class='team-content right'>
         <img [src]='match.awayTeam.imageUrl' alt='team' class='team-content__image' />
         <span class='team-content__name'>{{match.awayTeam.name}}</span>
-        <div *ngIf='match.awayTeam.odd; else emptyOdd' class='team-content__odd'>
-          <span class='team-content__odd-text'>x{{match.awayTeam.odd}}</span>
+        <div *ngIf='match.awayTeam.odd; else emptyOdd' class='team-content__bet'>
+          <span class='team-content__bet-amount' *ngIf='betData.awayTeamBet > 0'>
+            {{betData.awayTeamBet | currency:'uah':'₴ ':'.2'}}
+          </span>
+          <span class='team-content__bet-odd'>x{{match.awayTeam.odd}}</span>
         </div>
-        <app-button [buttonData]='betButtonData'>Bet</app-button>
+        <app-button (click)='openPlaceBetModal(match.awayTeam.id)' [buttonData]='betButtonData'>Bet</app-button>
       </div>
     </div>
   </div>
@@ -34,3 +40,5 @@
 <ng-template #emptyOdd>
   <div class='team-content__empty-odd'></div>
 </ng-template>
+
+<app-place-bet-modal></app-place-bet-modal>

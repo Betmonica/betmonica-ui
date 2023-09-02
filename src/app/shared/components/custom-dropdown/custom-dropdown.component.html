@@ -1,0 +1,9 @@
+<ul class='dropdown' *ngIf='isOpen'>
+  <li *ngFor='let item of list' (click)='item.onClick()' class='dropdown-item'>
+    <div class='dropdown-item__content'>
+      <div class='dropdown-item__content-text'>
+        {{item.name}}
+      </div>
+    </div>
+  </li>
+</ul>

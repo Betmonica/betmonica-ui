@@ -7,6 +7,15 @@
       <form (ngSubmit)='registration()' [formGroup]='registrationForm' class='modal-content__form form'>
         <div class='form-content'>
           <label class='form-content__label'>
+            <span class='form-content__label-text'>Username</span>
+            <input
+              class='form-content__label-input'
+              formControlName='username'
+              placeholder='Username'
+              type='text'
+            />
+          </label>
+          <label class='form-content__label'>
             <span class='form-content__label-text'>Email</span>
             <input
               class='form-content__label-input'
@@ -27,9 +36,7 @@
           <app-button [buttonData]='registrationButtonData'>Sign Up</app-button>
         </div>
       </form>
-      <span (click)='changeAuthorizationWay()' class='modal-content__change'>Already have an account?</span>
+      <span (click)='changeAuthenticationWay()' class='modal-content__change'>Already have an account?</span>
     </div>
   </div>
 </ngx-smart-modal>
-
-<app-login-modal></app-login-modal>

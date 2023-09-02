@@ -8,7 +8,11 @@
           </div>
         </div>
         <div class='matches-content__block-list'>
-          <app-match-row *ngFor='let match of matchBlock.matches' [match]='match'></app-match-row>
+          <app-match-row
+            *ngFor='let matchWithBets of matchBlock.matchesWithBets'
+            [match]='matchWithBets.match'
+            [bets]='matchWithBets.bets'
+          ></app-match-row>
         </div>
       </div>
     </ng-container>

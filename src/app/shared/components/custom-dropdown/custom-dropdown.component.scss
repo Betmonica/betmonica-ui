@@ -1,0 +1,32 @@
+.dropdown {
+	display: flex;
+	flex-direction: column;
+
+	position: absolute;
+	top: 30px;
+	right: 0;
+	background-color: var(--profile-popover-bg);
+	padding: 5px 0;
+
+	z-index: 9999;
+	width: 180%;
+
+	border-radius: 5px;
+
+	&-item {
+		cursor: pointer;
+		border-bottom: 1px solid var(--profile-popover-item-bg);
+		padding: 5px 10px;
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		&__content {
+			&-text {
+				font-size: 1.6rem;
+				color: var(--white-text-color);
+			}
+		}
+	}
+}

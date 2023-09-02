@@ -1,47 +1,60 @@
-@import "src/mixins";
+@import 'src/mixins';
 
 .header {
-  &-wrapper {
-    @include wrapper;
-  }
+	&-wrapper {
+		@include wrapper;
+	}
 
-  &-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
+	&-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 20px 0;
 
-    &__logo {
-      cursor: pointer;
+		&__logo {
+			cursor: pointer;
 
-      &-img {
-        width: 183px;
-        height: 32px;
-      }
-    }
-  }
+			&-img {
+				width: 183px;
+				height: 32px;
+			}
+		}
+	}
 }
 
 .profile {
-  &-content {
-    &__balance {
-    }
+	&-content {
+		display: flex;
+		gap: 10px;
 
-    &__name {
-    }
+		&__balance,
+		&__name {
+			position: relative;
 
-    &__authorization {
-    }
-  }
+			&-text {
+				display: inline-block;
+				font-size: 1.6rem;
+				padding: 3px 8px;
+				color: var(--white-text-color);
+			}
+		}
+
+		&__name {
+			&-text {
+				cursor: pointer;
+				background-color: var(--light-green-btn);
+			}
+		}
+	}
 }
 
-.authorization {
-  &-content {
-    &__buttons {
-      display: flex;
-      gap: 10px;
-    }
-  }
+.authentication {
+	&-content {
+		&__buttons {
+			display: flex;
+			gap: 10px;
+		}
+	}
 }
 
 .buttons {

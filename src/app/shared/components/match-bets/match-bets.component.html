@@ -1,0 +1,11 @@
+<div class='bets' *ngIf='betsWithMatchData.length > 0; else emptyBets'>
+  <app-match-bet
+    *ngFor='let betWithMatchData of betsWithMatchData'
+    [match]='betWithMatchData.match'
+    [bet]='betWithMatchData.bet'
+  ></app-match-bet>
+</div>
+
+<ng-template #emptyBets>
+  Clear
+</ng-template>

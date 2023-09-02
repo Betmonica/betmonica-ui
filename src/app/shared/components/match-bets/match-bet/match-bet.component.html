@@ -1,0 +1,49 @@
+<div class='match'>
+  <div class='match-wrapper'>
+    <div class='match-content'>
+      <div class='left'>
+        <ul class='match-content__teams teams'>
+          <li class='teams-item team'>
+            <div class='team-content'>
+              <img [src]='match.homeTeam.imageUrl' alt='team' class='team-content__image'>
+            </div>
+          </li>
+          <li class='teams-item vs'>VS</li>
+          <li class='teams-item team'>
+            <div class='team-content'>
+              <img [src]='match.awayTeam.imageUrl' alt='team' class='team-content__image'>
+            </div>
+          </li>
+        </ul>
+        <div class='match-content__bet bet'>
+          <div class='bet-content'>
+            <span class='bet-content__text'>Bet: team "{{betTeamName}}" win</span>
+          </div>
+        </div>
+      </div>
+      <div class='right'>
+        <div class='match-content__info info'>
+          <div class='info-content'>
+            <div class='info-content__bet' [ngClass]='{
+              "won": bet.status === BET_STATUSES.WON,
+              "lost": bet.status === BET_STATUSES.LOSE,
+              "upcoming": bet.status === BET_STATUSES.UPCOMING,
+              "cancelled": bet.status === BET_STATUSES.CANCELLED
+            }'>
+              <span class='amount'>
+                {{bet.betAmount | currency:'uah':'₴ ':'.2'}}
+              </span>
+              <span class='odd'>x{{bet.betOdd}}</span>
+              <span class='result' *ngIf='bet.status === BET_STATUSES.WON || bet.status === BET_STATUSES.UPCOMING'>
+                {{(bet.betAmount * bet.betOdd) | currency:'uah':'₴ ':'.2'}}
+              </span>
+            </div>
+            <div class='info-content__buttons' *ngIf='isPossibleToCancelBet'>
+              <app-button [buttonData]='buttonData' (click)='cancelBet()'>Cancel</app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

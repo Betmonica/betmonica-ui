@@ -1,0 +1,20 @@
+@import 'src/mixins';
+
+.modal {
+	&-content {
+		&__form {
+		}
+	}
+}
+
+.form {
+	&-content {
+		&__label {
+			@include label-field;
+		}
+	}
+}
+
+.form-validation {
+	@include form-validators;
+}

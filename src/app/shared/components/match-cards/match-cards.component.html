@@ -1,13 +1,19 @@
 <div class='cards'>
   <div class='cards-content'>
     <drag-scroll
-      *ngIf='matches.length > 0'
+      *ngIf='_matches.length > 0'
       [drag-scroll-y-disabled]='true'
-      [scrollbar-hidden]='true'
+      [scrollbar-hidden]='false'
       class='match-drag-scroll'
       style='width: 100%;'
     >
-      <app-match-card *ngFor='let match of matches' [matchData]='match'></app-match-card>
+      <ng-container *ngFor='let matchBlock of _matches'>
+        <app-match-card
+          *ngFor='let matchWithBets of matchBlock.matchesWithBets'
+          [match]='matchWithBets.match'
+          [bets]='matchWithBets.bets'
+        ></app-match-card>
+      </ng-container>
     </drag-scroll>
   </div>
 </div>

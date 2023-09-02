@@ -1,0 +1,63 @@
+.statistic {
+	&-content {
+		background-color: var(--match-bg);
+		border-radius: 5px;
+		padding: 20px;
+
+		&__columns {
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+			gap: 10px;
+
+			&-column {
+			}
+		}
+
+		&__profit {
+			padding-top: 20px;
+
+			&-text {
+				color: var(--white-text-color);
+				font-size: 1.6rem;
+			}
+		}
+	}
+}
+
+.column {
+	&-content {
+		&__labels {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			&-label {
+			}
+		}
+	}
+}
+
+.labels-label {
+	border-radius: 5px;
+	padding: 5px 10px;
+	width: fit-content;
+
+	&-text {
+		display: inline-block;
+		font-size: 1.6rem;
+	}
+
+	&.green {
+		align-self: flex-start;
+		text-align: left;
+		color: var(--won-bet-color);
+		background-color: var(--won-bet-bg);
+	}
+
+	&.red {
+		align-self: flex-end;
+		text-align: right;
+		color: var(--lose-bet-color);
+		background-color: var(--lose-bet-bg);
+	}
+}
