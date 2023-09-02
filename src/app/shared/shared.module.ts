@@ -16,6 +16,7 @@ import { MatchCardComponent } from './components/match-cards/match-card/match-ca
 import { ButtonComponent } from './components/button/button.component';
 import { BetTabsComponent } from './components/bet-tabs/bet-tabs.component';
 import { CustomDropdownComponent } from './components/custom-dropdown/custom-dropdown.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 /** MODALS **/
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -46,7 +47,8 @@ import { BetsStatisticComponent } from './components/bets-statistic/bets-statist
 		ClickOutsideDirective,
 		MatchBetsComponent,
 		MatchBetComponent,
-		BetsStatisticComponent
+		BetsStatisticComponent,
+		LoaderComponent
 	],
 	imports: [
 		CommonModule,
@@ -56,6 +58,6 @@ import { BetsStatisticComponent } from './components/bets-statistic/bets-statist
 		ReactiveFormsModule
 	],
 	providers: [DatePipe],
-	exports: [HeaderComponent]
+	exports: [HeaderComponent, LoaderComponent]
 })
 export class SharedModule {}

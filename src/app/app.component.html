@@ -1,2 +1,6 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
+
+<ng-container *ngIf="loaderService.isLoading$ | async">
+  <app-loader></app-loader>
+</ng-container>
