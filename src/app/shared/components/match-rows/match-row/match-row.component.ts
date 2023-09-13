@@ -43,6 +43,7 @@ export class MatchRowComponent {
   public openPlaceBetModal(selectedTeamId: string) {
     if (!this.authenticationService.isLoggedIn) {
       this.toastrService.error('Please login!');
+      return;
     }
 
     const placeBetModalData: PlaceBetModalData = {
