@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
-	BehaviorSubject,
-	catchError,
-	map,
-	Observable,
-	of,
-	Subscription
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  of,
+  Subscription
 } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { ToastrService } from 'ngx-toastr';
@@ -20,209 +20,216 @@ import { LOCALSTORAGE_KEYS } from '../enums';
 import { BetService } from './bet.service';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthenticationService {
-	private isLoggedIn$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false
-	);
-	private callCodeAtSubscription: Subscription | undefined;
+  private isLoggedIn$$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  private callCodeAtSubscription: Subscription | undefined;
 
-	public set isLoggedIn(isLoggedIn: boolean) {
-		this.isLoggedIn$$.next(isLoggedIn);
+  constructor(
+    private http: HttpClient,
+    private environmentService: EnvironmentService,
+    private store: Store,
+    private additionalService: AdditionalService,
+    private userService: UserService,
+    private toastrService: ToastrService,
+    private jwtService: JwtService,
+    private betService: BetService
+  ) {
+    const accessToken: string = this.accessToken;
 
-		if (isLoggedIn) {
-			this.startAutoRefreshAccessToken();
-			this.userService.startBalancePooling();
-		} else {
-			this.stopAutoRefreshAccessToken();
-			this.betService.clearBets();
-			this.userService.stopBalancePooling();
-		}
-	}
+    if (accessToken) {
+      this.isLoggedIn = true;
 
-	public get isLoggedIn(): boolean {
-		return this.isLoggedIn$$.getValue();
-	}
+      if (!this.jwtService.isTokenExpired(accessToken)) {
+        const userData: UserData = this.jwtService.getDataByToken(accessToken);
+        this.store.dispatch(new SetUserData(userData));
+      }
+    }
+  }
 
-	public get isLoggedIn$() {
-		return this.isLoggedIn$$.asObservable();
-	}
+  public get isLoggedIn(): boolean {
+    return this.isLoggedIn$$.getValue();
+  }
 
-	constructor(
-		private http: HttpClient,
-		private environmentService: EnvironmentService,
-		private store: Store,
-		private additionalService: AdditionalService,
-		private userService: UserService,
-		private toastrService: ToastrService,
-		private jwtService: JwtService,
-		private betService: BetService
-	) {
-		const accessToken: string = this.accessToken;
+  public set isLoggedIn(isLoggedIn: boolean) {
+    this.isLoggedIn$$.next(isLoggedIn);
 
-		if (accessToken) {
-			this.isLoggedIn = true;
+    if (isLoggedIn) {
+      this.startAutoRefreshAccessToken();
+      this.userService.startBalancePooling();
+    } else {
+      this.stopAutoRefreshAccessToken();
+      this.betService.clearBets();
+      this.userService.stopBalancePooling();
+    }
+  }
 
-			if (!this.jwtService.isTokenExpired(accessToken)) {
-				const userData: UserData = this.jwtService.getDataByToken(accessToken);
-				this.store.dispatch(new SetUserData(userData));
-			}
-		}
-	}
+  public get isLoggedIn$() {
+    return this.isLoggedIn$$.asObservable();
+  }
 
-	public login(
-		email: string,
-		password: string
-	): Observable<Response<TokenData>> {
-		return this.loginRequest(email, password).pipe(
-			map((response: Response<TokenData>) => {
-				const userData: UserData = this.jwtService.getDecodeToken<UserData>(
-					response.data.accessToken
-				);
-				this.store.dispatch(new SetUserData(userData));
-				this.accessToken = response.data.accessToken;
-				this.isLoggedIn = true;
+  public get accessToken(): string {
+    const accessToken: string | null = localStorage.getItem(
+      LOCALSTORAGE_KEYS.ACCESS_TOKEN
+    );
 
-				return response;
-			})
-		);
-	}
+    if (!accessToken) {
+      return '';
+    }
 
-	public registration(
-		username: string,
-		email: string,
-		password: string
-	): Observable<Response<TokenData>> {
-		return this.registrationRequest(username, email, password).pipe(
-			map((response: Response<TokenData>) => {
-				const userData: UserData = this.jwtService.getDecodeToken<UserData>(
-					response.data.accessToken
-				);
-				this.store.dispatch(new SetUserData(userData));
-				this.accessToken = response.data.accessToken;
-				this.isLoggedIn = true;
+    return JSON.parse(accessToken);
+  }
 
-				return response;
-			})
-		);
-	}
+  public set accessToken(accessToken: string) {
+    localStorage.setItem(
+      LOCALSTORAGE_KEYS.ACCESS_TOKEN,
+      JSON.stringify(accessToken)
+    );
+  }
 
-	public logout(): void {
-		this.logoutRequest().subscribe({
-			complete: () => {
-				this.accessToken = '';
-				this.isLoggedIn = false;
-				this.store.dispatch(new ResetUserData());
-			}
-		});
-	}
+  public login(
+    email: string,
+    password: string
+  ): Observable<Response<TokenData>> {
+    return this.loginRequest(email, password).pipe(
+      map((response: Response<TokenData>) => {
+        const userData: UserData = this.jwtService.getDecodeToken<UserData>(
+          response.data.accessToken
+        );
+        this.store.dispatch(new SetUserData(userData));
+        this.accessToken = response.data.accessToken;
+        this.isLoggedIn = true;
 
-	public refreshAccessToken(): Observable<boolean> {
-		return this.refreshAccessTokenRequest().pipe(
-			map((response: Response<TokenData>): boolean => {
-				this.accessToken = response.data.accessToken;
-				this.isLoggedIn = true;
-				return true;
-			}),
-			catchError(() => {
-				this.accessToken = '';
-				this.isLoggedIn = false;
-				return of(false);
-			})
-		);
-	}
+        return response;
+      })
+    );
+  }
 
-	private startAutoRefreshAccessToken(): void {
-		this.stopAutoRefreshAccessToken();
+  public registration(
+    username: string,
+    email: string,
+    password: string
+  ): Observable<Response<TokenData>> {
+    return this.registrationRequest(username, email, password).pipe(
+      map((response: Response<TokenData>) => {
+        const userData: UserData = this.jwtService.getDecodeToken<UserData>(
+          response.data.accessToken
+        );
+        this.store.dispatch(new SetUserData(userData));
+        this.accessToken = response.data.accessToken;
+        this.isLoggedIn = true;
 
-		console.log('Start tracking token expire!');
-		const expiredIn: number = this.jwtService.getExpiryTime(this.accessToken);
-		const convertedExpiredIn: number = new Date(0).setUTCSeconds(expiredIn);
+        return response;
+      })
+    );
+  }
 
-		this.callCodeAtSubscription = this.additionalService
-			.callCodeAt(convertedExpiredIn)
-			.subscribe({
-				next: () => {
-					this.refreshAccessToken().subscribe({
-						next: (isRefreshed: boolean) => {
-							if (!isRefreshed) {
-								console.log('Token is not refreshed!');
-								return;
-							}
+  public logout(): void {
+    this.logoutRequest().subscribe({
+      error: () => {
+        this.clearUserData();
+      },
+      complete: () => {
+        this.clearUserData();
+      }
+    });
+  }
 
-							console.log('Token refreshed! Start new token expire track!');
-							this.startAutoRefreshAccessToken();
-						}
-					});
-				}
-			});
-	}
+  public refreshAccessToken(): Observable<boolean> {
+    return this.refreshAccessTokenRequest().pipe(
+      map((response: Response<TokenData>): boolean => {
+        this.accessToken = response.data.accessToken;
+        this.isLoggedIn = true;
+        return true;
+      }),
+      catchError(() => {
+        this.accessToken = '';
+        this.isLoggedIn = false;
+        return of(false);
+      })
+    );
+  }
 
-	private stopAutoRefreshAccessToken() {
-		console.log('Stop tracking token expire!');
-		this.callCodeAtSubscription?.unsubscribe();
-	}
+  private clearUserData() {
+    this.accessToken = '';
+    this.isLoggedIn = false;
+    this.store.dispatch(new ResetUserData());
+  }
 
-	public get accessToken(): string {
-		const accessToken: string | null = localStorage.getItem(
-			LOCALSTORAGE_KEYS.ACCESS_TOKEN
-		);
+  private startAutoRefreshAccessToken(): void {
+    this.stopAutoRefreshAccessToken();
 
-		if (!accessToken) {
-			return '';
-		}
+    console.log('Start tracking token expire!');
+    const expiredIn: number = this.jwtService.getExpiryTime(this.accessToken);
+    const convertedExpiredIn: number = new Date(0).setUTCSeconds(expiredIn);
 
-		return JSON.parse(accessToken);
-	}
+    this.callCodeAtSubscription = this.additionalService
+      .callCodeAt(convertedExpiredIn)
+      .subscribe({
+        next: () => {
+          this.refreshAccessToken().subscribe({
+            next: (isRefreshed: boolean) => {
+              if (!isRefreshed) {
+                console.log('Token is not refreshed!');
+                return;
+              }
 
-	public set accessToken(accessToken: string) {
-		localStorage.setItem(
-			LOCALSTORAGE_KEYS.ACCESS_TOKEN,
-			JSON.stringify(accessToken)
-		);
-	}
+              console.log('Token refreshed! Start new token expire track!');
+              this.startAutoRefreshAccessToken();
+            }
+          });
+        }
+      });
+  }
 
-	private logoutRequest(): Observable<Response<{}>> {
-		return this.http.delete<Response<{}>>(
-			`${this.environmentService.environment.apiUrl}/user/logout`,
-			{ withCredentials: true }
-		);
-	}
+  private stopAutoRefreshAccessToken() {
+    console.log('Stop tracking token expire!');
+    this.callCodeAtSubscription?.unsubscribe();
+  }
 
-	private refreshAccessTokenRequest(): Observable<Response<TokenData>> {
-		return this.http.get<Response<TokenData>>(
-			`${this.environmentService.environment.apiUrl}/user/refresh-token`,
-			{ withCredentials: true }
-		);
-	}
+  private logoutRequest(): Observable<Response<{}>> {
+    return this.http.delete<Response<{}>>(
+      `${this.environmentService.environment.apiUrl}/user/logout`,
+      { withCredentials: true }
+    );
+  }
 
-	private loginRequest(
-		email: string,
-		password: string
-	): Observable<Response<TokenData>> {
-		return this.http.post<Response<TokenData>>(
-			`${this.environmentService.environment.apiUrl}/user/login`,
-			{
-				email,
-				password
-			},
-			{ withCredentials: true }
-		);
-	}
+  private refreshAccessTokenRequest(): Observable<Response<TokenData>> {
+    return this.http.get<Response<TokenData>>(
+      `${this.environmentService.environment.apiUrl}/user/refresh-token`,
+      { withCredentials: true }
+    );
+  }
 
-	private registrationRequest(
-		username: string,
-		email: string,
-		password: string
-	): Observable<Response<TokenData>> {
-		return this.http.post<Response<TokenData>>(
-			`${this.environmentService.environment.apiUrl}/user/registration`,
-			{
-				username,
-				email,
-				password
-			}
-		);
-	}
+  private loginRequest(
+    email: string,
+    password: string
+  ): Observable<Response<TokenData>> {
+    return this.http.post<Response<TokenData>>(
+      `${this.environmentService.environment.apiUrl}/user/login`,
+      {
+        email,
+        password
+      },
+      { withCredentials: true }
+    );
+  }
+
+  private registrationRequest(
+    username: string,
+    email: string,
+    password: string
+  ): Observable<Response<TokenData>> {
+    return this.http.post<Response<TokenData>>(
+      `${this.environmentService.environment.apiUrl}/user/registration`,
+      {
+        username,
+        email,
+        password
+      }
+    );
+  }
 }
